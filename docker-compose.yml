@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend_crud
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres123
+      - DB_NAME=crud_db
+      - DB_HOST=postgres_crud
+      - DB_PORT=5432
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend_crud
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_crud
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: crud_db
+    ports:
+      - "5432:5432"
