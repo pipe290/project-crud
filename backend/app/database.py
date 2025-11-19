@@ -1,30 +1,46 @@
 """
-Database utilities: engine and SessionLocal creation.
-All imports at top as required.
+database.py
+Configuración de la conexión a PostgreSQL con SQLAlchemy.
 """
 
-import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env if present
-load_dotenv()
+# --- Cargar variables de entorno desde .env ---
+load_dotenv()  # Esto permite usar un archivo .env en backend/
 
-DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASS = os.getenv("DB_PASS", "postgres123")
-DB_NAME = os.getenv("DB_NAME", "crud_db")
-DB_HOST = os.getenv("DB_HOST", "postgres_crud")
-DB_PORT = os.getenv("DB_PORT", "5432")
+# --- Configuración de la base de datos ---
+POSTGRES_USER = os.getenv("DB_USER", "crud_user")
+POSTGRES_PASSWORD = os.getenv("DB_PASS", "1234")
+POSTGRES_DB = os.getenv("DB_NAME", "crud_db")
+POSTGRES_HOST = os.getenv("DB_HOST", "127.0.0.1")
+POSTGRES_PORT = os.getenv("DB_PORT", "5432")
 
-# Standard SQLAlchemy DB URL for Postgres
-DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# URL de conexión
+SQLALCHEMY_DATABASE_URL = (
+    f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+)
 
-# create engine with pool_pre_ping to avoid stale connections
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+# --- Crear motor SQLAlchemy ---
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    echo=True,  # Cambia a False en producción
+    pool_pre_ping=True  # Evita errores de conexión inactiva
+)
 
-# SessionLocal factory used to create DB sessions
+# --- Crear sesión ---
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for models
+# --- Base para modelos ---
 Base = declarative_base()
+
+# --- Dependencia para inyectar la sesión en endpoints ---
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -1,8 +1,6 @@
 # Backend Dockerfile - FastAPI + Uvicorn
 FROM python:3.10-slim
 
-ENV PYTHONPATH=/app
-
 # Set working directory
 WORKDIR /app
 
@@ -10,21 +8,25 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install system deps
-RUN apt-get update && apt-get install -y build-essential libpq-dev --no-install-recommends \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for Docker layer caching
 COPY requirements.txt .
 
-# Install python dependencies
+# Upgrade pip and install Python dependencies
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application
+# Copy all backend code
 COPY . .
 
-# Expose port
+# Expose port 8000 (coincide con docker-compose)
 EXPOSE 8000
 
 # Start the app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

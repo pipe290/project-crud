@@ -1,17 +1,9 @@
-"""
-Utility to standardize API responses.
-"""
-
-from typing import Any, Optional, Dict
-
-def build_response(message: str, status: str = "success", data: Optional[Any] = None) -> Dict[str, Any]:
+def build_response(message: str, status: str, data=None):
     """
-    Standard response format.
-    - message: human readable message
-    - status: 'success'|'error'
-    - data: optional; payload (can be dict, list, None)
+    Devuelve un formato de respuesta estándar para toda la API.
     """
-    payload = {"message": message, "status": status}
-    if data is not None:
-        payload["data"] = data
-    return payload
+    return {
+        "status": status,
+        "message": message,
+        "data": data
+    }

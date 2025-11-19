@@ -1,7 +1,10 @@
+version: "3.9"
+
 services:
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
     container_name: backend_crud
     restart: always
     ports:
@@ -14,16 +17,21 @@ services:
       - DB_NAME=crud_db
       - DB_HOST=postgres_crud
       - DB_PORT=5432
+    networks:
+      - crud_network
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     container_name: frontend_crud
     restart: always
     ports:
-      - "8080:80"
+      - "4200:4200"
     depends_on:
       - backend
+    networks:
+      - crud_network
 
   postgres:
     image: postgres:15
@@ -35,3 +43,9 @@ services:
       POSTGRES_DB: crud_db
     ports:
       - "5432:5432"
+    networks:
+      - crud_network
+
+networks:
+  crud_network:
+    name: crud_network

@@ -1,7 +1,3 @@
-"""
-Pydantic schemas for request/response validation.
-"""
-
 from typing import Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
@@ -15,7 +11,7 @@ class ProductCreate(ProductBase):
     pass
 
 class ProductUpdate(BaseModel):
-    name: Optional[str] = None
+    name: Optional[str] = Field(None, min_length=1, max_length=150)
     description: Optional[str] = None
     price: Optional[float] = Field(None, ge=0)
 
@@ -24,4 +20,5 @@ class ProductOut(ProductBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+

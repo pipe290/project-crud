@@ -4,11 +4,11 @@ SQLAlchemy models.
 
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime
 from sqlalchemy.sql import func
-from app.database import Base
+from .database import Base
 
 class Product(Base):
     """
-    Simple Product model for CRUD demonstration.
+    Modelo de Producto para CRUD y demostración.
     """
     __tablename__ = "products"
 
