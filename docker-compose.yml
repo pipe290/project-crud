@@ -4,48 +4,55 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend_crud
+      dockerfile: Dockerfile_backend
+    container_name: backend
     restart: always
     ports:
       - "8000:8000"
     depends_on:
       - postgres
+    env_file:
+      - .env
     environment:
-      - DB_USER=postgres
-      - DB_PASS=postgres123
-      - DB_NAME=crud_db
-      - DB_HOST=postgres_crud
-      - DB_PORT=5432
+      DB_HOST: postgres
+      DB_PORT: 5432
     networks:
-      - crud_network
+      - backend
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend_crud
+      dockerfile: Dockerfile_frontend
+    container_name: frontend
     restart: always
     ports:
       - "4200:4200"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     depends_on:
       - backend
     networks:
-      - crud_network
+      - backend
 
   postgres:
     image: postgres:15
-    container_name: postgres_crud
-    restart: always
+    container_name: postgres
+    restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
-      POSTGRES_DB: crud_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
-      - crud_network
+      - backend
 
 networks:
-  crud_network:
-    name: crud_network
+  backend:
+
+volumes:
+  postgres_data:
