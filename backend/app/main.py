@@ -67,7 +67,7 @@ def create_product_endpoint(product_in: schemas.ProductCreate, db: Session = Dep
         raise HTTPException(status_code=500, detail="Internal server error")
 
 @app.get("/products", summary="List products")
-def list_products(skip: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=1000),
+def list_products(skip: int = Query(0, ge=0), limit: int = Query(20000, ge=1, le=50000),
                   db: Session = Depends(get_db)):
     try:
         items = crud.get_products(db, skip=skip, limit=limit)

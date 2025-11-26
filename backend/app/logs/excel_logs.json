@@ -1,0 +1,66 @@
+[
+  {
+    "timestamp": "2025-11-26T21:15:22.778182",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:15:27.640513",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:29:52.792404",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:29:57.661050",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:47:43.581032",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:50:28.097924",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:50:58.340111",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Hoja1",
+      "count": 6
+    }
+  },
+  {
+    "timestamp": "2025-11-26T21:51:57.025004",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
+  }
+]
