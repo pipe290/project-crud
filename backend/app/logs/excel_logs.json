@@ -62,5 +62,29 @@
       "sheet": "Canasta Familiar COP",
       "count": 1000
     }
+  },
+  {
+    "timestamp": "2025-11-27T04:04:07.145820",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-27T04:04:15.614883",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
+  },
+  {
+    "timestamp": "2025-11-27T04:04:58.644810",
+    "event": "import_completed",
+    "details": {
+      "sheet": "Canasta Familiar COP",
+      "count": 1000
+    }
   }
 ]
